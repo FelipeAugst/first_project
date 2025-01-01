@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use \App\Models\User;
+use NunoMaduro\Collision\Writer;
 
 class  UserController extends Controller
 {    
@@ -83,6 +84,7 @@ return response()->json(['updated'=>$request->all()],200);
    public static function show(Request $request,$id){
 
     $user = User::find($id);
+    echo $user;
 
     return response()->json($user,200);
 
@@ -90,11 +92,18 @@ return response()->json(['updated'=>$request->all()],200);
 
    }
 
-   public static function destroy(Request $request,$id){
+   public static function destroy(Request $request, $id){
 
-   $deletedId = User::destroy($id);
+    
 
-    return response()->json(['deleted'=>$deletedId],200);
+   
+     $profiles = User::find($id)->profiles;
+     if($profiles->isNotEmpty()){
+        return response()->json(["error"=> "can not delete a user with profiles","profiles"=>$profiles],500);
+     }
+      $user = User::find($id);
+      $user->delete();
+    return response()->json(["deleted"=> $user],200);
 
      
 
