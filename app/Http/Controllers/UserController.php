@@ -7,27 +7,29 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use \App\Models\User;
 use NunoMaduro\Collision\Writer;
+use Illuminate\Validation\Rule;
 
 class  UserController extends Controller
 {    
     public static function index(Request $request)
     { 
         $validator = Validator::make($request->all(), [
-			'limite' => 'required', 
-             'orderby'=>'required',
-             'direction'=>'required']);
+			'limit' => 'required|int', 
+             'orderby'=>'required|string|exists:users',
+             'direction'=>['required','string',Rule::in('asc','desc','ASC','DESC')]
+        ]);
       
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
         
-        $limite= $request->input('limite');
+        $limit= $request->input('limit');
 		$orderby  = $request->input('orderby');
 		$direction = $request->input('direction');
 
         $users= User::select('id','name','email')
                               ->orderBy($orderby,$direction)
-                             ->paginate($limite);
+                             ->paginate($limit);
        
 
      return response()->json($users, 200);

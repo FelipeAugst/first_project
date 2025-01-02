@@ -13,23 +13,24 @@ class ProfileController extends Controller
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'limit'=> 'required',
-            'orderby'=> 'required',
-            'direction' => 'required'
+            'limit'=> 'required|int',
+            'orderby'=> 'required|string',
+            'direction' => ['required', 'string',Rule::in(['asc','desc','ASC','DESC'])]
         ]);
+
         if($validator->fails()){
             return response()->json(['error'=>$validator->errors()],422);
 
         }
         
 
-        $limite= $request->input('limite');
+        $limit= $request->input('limit');
 		$orderby  = $request->input('orderby');
 		$direction = $request->input('direction');
 
         $profiles = Profile::select("id","user_id","profile")
                             ->orderBy($orderby,$direction)
-                            ->paginate($limite);
+                            ->paginate($limit);
 
         return response()->json($profiles,200);
 
@@ -42,11 +43,7 @@ class ProfileController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'user_id'=> 'int|required|exists:users,id',
-            'profile' => 
-                     ['string',
-                     'required',
-                     Rule::in('admin','user','Admin','User')
-                    ]
+            'profile' =>  ['string','required','max:255', Rule::in(['admin','user','ADMIN','USER']) ]
             ]);
 
             if($validator->fails()){
