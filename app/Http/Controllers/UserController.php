@@ -15,8 +15,8 @@ class  UserController extends Controller
     { 
         $validator = Validator::make($request->all(), [
 			'limit' => 'required|int', 
-             'orderby'=>'required|string|exists:users',
-             'direction'=>['required','string',Rule::in('asc','desc','ASC','DESC')]
+             'orderby'=>'required|string',
+             'direction'=>['required','string',Rule::in(['asc','desc','ASC','DESC'])]
         ]);
       
         if ($validator->fails()) {
@@ -27,7 +27,7 @@ class  UserController extends Controller
 		$orderby  = $request->input('orderby');
 		$direction = $request->input('direction');
 
-        $users= User::select('id','name','email')
+        $users= User::with("profiles")->select('id','name','email')
                               ->orderBy($orderby,$direction)
                              ->paginate($limit);
        

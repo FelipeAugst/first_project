@@ -28,7 +28,7 @@ class ProfileController extends Controller
 		$orderby  = $request->input('orderby');
 		$direction = $request->input('direction');
 
-        $profiles = Profile::select("id","user_id","profile")
+        $profiles = Profile::with('user:id,name')->select("id","user_id","profile")
                             ->orderBy($orderby,$direction)
                             ->paginate($limit);
 
@@ -82,7 +82,7 @@ class ProfileController extends Controller
             'profile' => 
                      ['string',
                      'required',
-                     Rule::in(['admin','user','Admin','User'])
+                     Rule::in(['admin','user','ADMIN','USER'])
                     ]
             ]);
 

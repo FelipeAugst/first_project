@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\Auhtorization;
 
-Route::prefix("user")->group( function(){
+Route::prefix("user")->middleware('auth:sanctum')->group( function(){
 
 Route::get('/index', [UserController::class, 'index']);
 Route::post('/store', [UserController::class, 'store']);
@@ -16,7 +18,7 @@ Route::delete('/{id}/destroy', [UserController::class, 'destroy']);
 );
 
 
-Route::prefix("profile")->group( function(){
+Route::prefix("profile")->middleware('auth:sanctum')->group( function(){
 
     Route::get('/index', [ProfileController::class, 'index']);
     Route::post('/store', [ProfileController::class, 'store']);
@@ -29,10 +31,14 @@ Route::prefix("profile")->group( function(){
 
 
 
+    Route::get("/login",[AuthController::class,"login"]);
+    Route::get("/logout",[AuthController::class,"logout"]);
+
 Route::prefix("api")->group(function(){
 
 Route::prefix("user");
 Route::prefix("profile");
+
 
 
 });

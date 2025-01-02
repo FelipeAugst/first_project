@@ -10,7 +10,7 @@ class Profile extends Model
     protected $fillable= ['user_id','profile'];
 
 
-    public function users(): BelongsTo{
+    public function user(): BelongsTo{
         return $this->belongsTo(User::class);
     }
 }
