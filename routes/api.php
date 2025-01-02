@@ -6,6 +6,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\Auhtorization;
 
+Route::prefix("api")->group(function(){
+    
 Route::prefix("user")->middleware('auth:sanctum')->group( function(){
 
 Route::get('/index', [UserController::class, 'index']);
@@ -33,12 +35,5 @@ Route::prefix("profile")->middleware('auth:sanctum')->group( function(){
 
     Route::get("/login",[AuthController::class,"login"]);
     Route::get("/logout",[AuthController::class,"logout"]);
-
-Route::prefix("api")->group(function(){
-
-Route::prefix("user");
-Route::prefix("profile");
-
-
 
 });
