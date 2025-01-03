@@ -1,0 +1,129 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "First Laravel API",
+        "description": "Simple Laravel Api who manage users and associated profiles",
+        "version": "0.0.1"
+    },
+    "paths": {
+        "user/index": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "List all users.",
+                "operationId": "21c25ee685a01247a977a6c738207053",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "limit of results returned",
+                        "required": true,
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    {
+                        "name": "orderby",
+                        "in": "query",
+                        "description": "column to order data",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "direction",
+                        "in": "query",
+                        "description": "direction of data ordenation",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "unprocessable content"
+                    }
+                }
+            }
+        },
+        "/user/store": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a new user",
+                "operationId": "5fecb71a050fd672799c24f0d981c856",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#components/schemas/profile"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "profile": {
+                "title": "profile",
+                "description": "profile schema",
+                "required": [
+                    "user_id",
+                    "profile"
+                ],
+                "properties": {
+                    "user_id": {
+                        "description": "Id of the user who own the profile",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "profile": {
+                        "description": "Type of profile",
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "User",
+            "description": "User"
+        }
+    ]
+}

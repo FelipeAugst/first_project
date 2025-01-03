@@ -7,9 +7,48 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
+
+
+
 class ProfileController extends Controller
 {
-   
+   /**
+    * @OA\Get(
+    *   tags={"User"},
+    *   path="user/index",
+    *   summary="List all users.",
+     * @OA\Response(response=200, 
+     * description="OK", 
+     * @OA\JsonContent(
+     *   @OA\Schema(ref="#components/schemas/profile"))
+     * ),
+    *   @OA\Response(response=401, description="Unauthorized"),
+    *   @OA\Response(response=422, description="unprocessable content"),
+
+    *   @OA\Parameter(
+    *     name="limit",
+    *     in="query",
+    *     required=true,
+    *     description= "limit of results returned",
+    *     @OA\Schema(type="int")
+    *   ),
+
+    *  @OA\Parameter(
+    *    name="orderby",
+    *    in="query",
+    *    required=true,
+    *    description= "column to order data",
+    *    @OA\Schema(type="string")
+    *  ),
+    * @OA\Parameter(
+    *  name="direction",
+    *  in= "query",
+    *  required=true,
+    *  description= "direction of data ordenation",
+    *  @OA\Schema(type="string")
+    *  )
+    * )
+    */
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -38,7 +77,26 @@ class ProfileController extends Controller
 
    
 
-   
+   /**
+    * @OA\Post(
+    *       tags={"User"},
+    *       path="/user/store",
+    *       summary="Create a new user",
+    *       @OA\RequestBody(
+    *           required=true,
+    *           @OA\JsonContent(
+    *               allOf={
+    *                       @OA\Schema(ref="#components/schemas/profile")
+    *                     }
+    *                         ),
+    *                     ),
+    *   
+    *   @OA\Response(response=200, description="OK"),
+    *   @OA\Response(response=401, description="Unauthorized"),
+    *   @OA\Response(response=404, description="Not Found")
+    *      )
+    */
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
