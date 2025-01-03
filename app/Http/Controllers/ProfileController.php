@@ -14,9 +14,9 @@ class ProfileController extends Controller
 {
    /**
     * @OA\Get(
-    *   tags={"User"},
-    *   path="user/index",
-    *   summary="List all users.",
+    *   tags={"Profile"},
+    *   path="profile/index",
+    *   summary="List all profiles.",
      * @OA\Response(response=200, 
      * description="OK", 
      * @OA\JsonContent(
@@ -79,9 +79,9 @@ class ProfileController extends Controller
 
    /**
     * @OA\Post(
-    *       tags={"User"},
-    *       path="/user/store",
-    *       summary="Create a new user",
+    *       tags={"Profile"},
+    *       path="/profile/store",
+    *       summary="Create a new profile",
     *       @OA\RequestBody(
     *           required=true,
     *           @OA\JsonContent(
@@ -91,9 +91,15 @@ class ProfileController extends Controller
     *                         ),
     *                     ),
     *   
-    *   @OA\Response(response=200, description="OK"),
+    *   @OA\Response(response=201, description="Created",
+    *              @OA\JsonContent(
+    *                     allOf={
+    *                          @OA\Schema(ref="#components/schemas/profile")
+    *                          }
+    *                           )
+    *              ),
     *   @OA\Response(response=401, description="Unauthorized"),
-    *   @OA\Response(response=404, description="Not Found")
+    *   @OA\Response(response=422, description="Unprocessable Content")
     *      )
     */
 

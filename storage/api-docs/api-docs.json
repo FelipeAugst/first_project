@@ -82,14 +82,25 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#components/schemas/profile"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "404": {
-                        "description": "Not Found"
+                    "422": {
+                        "description": "Unprocessable Content"
                     }
                 }
             }
