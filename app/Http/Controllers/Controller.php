@@ -9,20 +9,22 @@ namespace App\Http\Controllers;
  *   title= "First Laravel API", 
  *    description= "Simple Laravel Api who manage users and associated profiles",
  *    version="0.0.1",
+ *     @OA\SecurityScheme(
+ *    securityScheme= "bearerAuth",
+ *    in="header",
+ *     description="Token to authenticate users",
+ *     type="http",
+ *    scheme="bearer",
+ *  
+ *    
+ *  ),
  *        )
  * 
  * @OA\Servers(
  *   url="http://localhost:8000/api
  *  )
  *  
- *  @OA\SecurityScheme(
- *    securityScheme= "bearerAuth",
- *     description="Token to authenticate users"
- *     type="http",
- *    scheme="bearer"
- *  
- *    
- *  )
+ * 
  *  
  *  
  * 

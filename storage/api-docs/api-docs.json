@@ -117,6 +117,338 @@
                     }
                 ]
             }
+        },
+        "/api/profile/{id}/show": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Search and show a profile by id.",
+                "operationId": "21ef95c6363421071b09c8ac717f6394",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#components/schemas/profile"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "0": "bearerAuth:{}"
+                    }
+                ]
+            }
+        },
+        "/profile/{id}/update": {
+            "put": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Update an existing profile",
+                "operationId": "d6fcbec23f0daf4cee0c50c2c3c4c1fa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#components/schemas/profile"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/profile/{id}/destroy": {
+            "delete": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Delete a profile by id.",
+                "operationId": "44e1f66c1081db123b8a1c2957caadb2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "0": "bearerAuth:{}"
+                    }
+                ]
+            }
+        },
+        "/api/user/index": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "List all users.",
+                "operationId": "0fa915002c81b50c00f91f5be24957c6",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "limit of results returned",
+                        "required": true,
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    {
+                        "name": "orderby",
+                        "in": "query",
+                        "description": "column to order data",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "direction",
+                        "in": "query",
+                        "description": "direction of data ordenation",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/user"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "unprocessable content"
+                    }
+                },
+                "security": [
+                    {
+                        "0": "bearerAuth:{}"
+                    }
+                ]
+            }
+        },
+        "/api/user/store": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a new user",
+                "operationId": "efad1bddb09c97653ade562ab1dfb950",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#components/schemas/user"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#components/schemas/user"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                },
+                "security": [
+                    {
+                        "0": "bearerAuth:{}"
+                    }
+                ]
+            }
+        },
+        "/user/update": {
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update an existing user",
+                "operationId": "83fc715238b719fc325dcffb37050fc2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#components/schemas/user"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/user/{id}/show": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Search and show a user by id.",
+                "operationId": "790dfc3d5c09a7b5e4b6bb7a61fe0608",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#components/schemas/user"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "0": "bearerAuth:{}"
+                    }
+                ]
+            }
+        },
+        "/api/user/{id}/destroy": {
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete a user by id.",
+                "operationId": "b7ab796d07cae9f6e973c6632fc72361",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "0": "bearerAuth:{}"
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -141,11 +473,38 @@
                     }
                 },
                 "type": "object"
+            },
+            "user": {
+                "title": "user",
+                "description": "user",
+                "required": [
+                    "name",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "Name of user",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "email": {
+                        "description": "Email of user",
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "password": {
+                        "description": "Password of user",
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                "type": "object"
             }
         },
         "responses": {
             "401": {
-                "description": "Unauthorized"
+                "description": "Unauthenticated"
             },
             "422": {
                 "description": "unprocessable content"
@@ -156,6 +515,10 @@
         {
             "name": "Profile",
             "description": "Profile"
+        },
+        {
+            "name": "User",
+            "description": "User"
         }
     ]
 }

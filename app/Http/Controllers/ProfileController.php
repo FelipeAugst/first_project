@@ -52,7 +52,7 @@ class ProfileController extends Controller
      *                     )
      *                   )
      * ),
-    *   @OA\Response(response=401, description="Unauthorized"),
+    *   @OA\Response(response=401, description="Unauthenticated"),
     *   @OA\Response(response=422, description="unprocessable content"),
 
     * )
@@ -134,6 +134,33 @@ class ProfileController extends Controller
 
     }
 
+    /**
+     * @OA\Get(
+     *   tags={"Profile"},
+     *   path="/api/profile/{id}/show",
+     *   security= {{"bearerAuth:{}"}},
+     *   summary="Search and show a profile by id.",
+     *   @OA\Parameter(
+     *     name= "id",
+     *     in="path",
+     *     required=true
+     *     
+     *   ),
+     *   @OA\Response(
+     *     response=200, 
+     *     description="OK",
+     *      @OA\JsonContent(
+     *              allOf={ 
+     *                    @OA\Schema(ref="#components/schemas/profile") 
+     *                   }
+     *               )
+     * 
+     * ),
+     *   @OA\Response(response=401, description="Unauthenticated"),
+     *   
+     * )
+     */
+
     
     public function show(Request $request, $id)
     {
@@ -145,7 +172,32 @@ class ProfileController extends Controller
     }
 
     
-
+/**
+ * @OA\Put(
+ *   tags={"Profile"},
+ *   path="/profile/{id}/update",
+ *   summary="Update an existing profile",
+ *    @OA\Parameter(
+ *     name= "id",
+ *     in="path",
+ *     required=true
+ *     
+ *   ),
+ *   @OA\RequestBody(
+ *          required=true,
+ *          @OA\JsonContent(
+ *                 allOf={
+ *                    @OA\Schema(ref="#components/schemas/profile")
+ *                     }
+ *         
+ *                      )  
+ *                  
+ *     
+ *        ),
+ *   @OA\Response(response=200, description="Ok"),
+ *   @OA\Response(response=401, description="Unauthenticated"),
+ *   )
+ */
     
     public function update(Request $request, $id)
     {
@@ -167,6 +219,28 @@ class ProfileController extends Controller
             return response()->json(["updated"=>$id]);
         
     }
+
+
+  /**
+     * @OA\Delete(
+     *   tags={"Profile"},
+     *   path="/api/profile/{id}/destroy",
+     *   security= {{"bearerAuth:{}"}},
+     *   summary="Delete a profile by id.",
+     *   @OA\Parameter(
+     *     name= "id",
+     *     in="path",
+     *     required=true
+     *     
+     *   ),
+     *   @OA\Response(
+     *     response=200, 
+     *     description="OK"
+     *              ),
+     *   @OA\Response(response=401, description="Unauthenticated"),
+     *   
+     * )
+     */
 
     
     public function destroy(Request $request, $id)

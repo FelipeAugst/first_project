@@ -11,6 +11,39 @@ use function Laravel\Prompts\password;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
+
+/**
+      * @OA\Schema(
+      *  schema="user",
+      * description="user",
+      * title= "user",
+      *required={
+      *  "name",
+      *   "email",
+      *   "password"
+      *     },
+      *   @OA\Property(   
+      *   property="name",   
+      *   type="string",   
+      *   format="string",   
+      *   description="Name of user"   
+      *    ),
+      *  @OA\Property(   
+      *   property="email",   
+      *   type="string",   
+      *   format="string",   
+      *   description="Email of user"   
+      *    ),
+      * @OA\Property(   
+      *   property="password",   
+      *   type="string",   
+      *   format="string",   
+      *   description="Password of user"   
+      *    )
+    *)
+        
+    */
+
 {   
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable,HasApiTokens;
