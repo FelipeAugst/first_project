@@ -6,13 +6,13 @@
         "version": "0.0.1"
     },
     "paths": {
-        "user/index": {
+        "/api/profile/index": {
             "get": {
                 "tags": [
-                    "User"
+                    "Profile"
                 ],
-                "summary": "List all users.",
-                "operationId": "21c25ee685a01247a977a6c738207053",
+                "summary": "List all profiles.",
+                "operationId": "69bf9ef74089f011e004a0017c4ddf11",
                 "parameters": [
                     {
                         "name": "limit",
@@ -47,26 +47,34 @@
                         "description": "OK",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/profile"
+                                            }
+                                        }
+                                    ]
+                                }
                             }
                         }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "422": {
-                        "description": "unprocessable content"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "0": "bearerAuth:{}"
+                    }
+                ]
             }
         },
-        "/user/store": {
+        "/api/profile/store": {
             "post": {
                 "tags": [
-                    "User"
+                    "Profile"
                 ],
-                "summary": "Create a new user",
-                "operationId": "5fecb71a050fd672799c24f0d981c856",
+                "summary": "Create a new profile",
+                "operationId": "f8d0fdc840e2f4f6572e656002f37dde",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -97,12 +105,17 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Unauthenticated"
                     },
                     "422": {
                         "description": "Unprocessable Content"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "0": "bearerAuth:{}"
+                    }
+                ]
             }
         }
     },
@@ -129,12 +142,20 @@
                 },
                 "type": "object"
             }
+        },
+        "responses": {
+            "401": {
+                "description": "Unauthorized"
+            },
+            "422": {
+                "description": "unprocessable content"
+            }
         }
     },
     "tags": [
         {
-            "name": "User",
-            "description": "User"
+            "name": "Profile",
+            "description": "Profile"
         }
     ]
 }

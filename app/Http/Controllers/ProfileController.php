@@ -15,16 +15,10 @@ class ProfileController extends Controller
    /**
     * @OA\Get(
     *   tags={"Profile"},
-    *   path="profile/index",
+    *   path="/api/profile/index",
     *   summary="List all profiles.",
-     * @OA\Response(response=200, 
-     * description="OK", 
-     * @OA\JsonContent(
-     *   @OA\Schema(ref="#components/schemas/profile"))
-     * ),
-    *   @OA\Response(response=401, description="Unauthorized"),
-    *   @OA\Response(response=422, description="unprocessable content"),
-
+    *   security= {{"bearerAuth:{}"}},
+    * 
     *   @OA\Parameter(
     *     name="limit",
     *     in="query",
@@ -46,7 +40,21 @@ class ProfileController extends Controller
     *  required=true,
     *  description= "direction of data ordenation",
     *  @OA\Schema(type="string")
-    *  )
+    *  ),
+    * @OA\Response(response=200, 
+     * description="OK", 
+     *    @OA\JsonContent(
+     *          allOf= { 
+     *               @OA\Schema(type="array",
+     *               @OA\Items(ref="#/components/schemas/profile")
+     *                         )
+     *                  }
+     *                     )
+     *                   )
+     * ),
+    *   @OA\Response(response=401, description="Unauthorized"),
+    *   @OA\Response(response=422, description="unprocessable content"),
+
     * )
     */
     public function index(Request $request)
@@ -80,8 +88,9 @@ class ProfileController extends Controller
    /**
     * @OA\Post(
     *       tags={"Profile"},
-    *       path="/profile/store",
+    *       path="/api/profile/store",
     *       summary="Create a new profile",
+    *       security= {{"bearerAuth:{}"}},
     *       @OA\RequestBody(
     *           required=true,
     *           @OA\JsonContent(
@@ -98,7 +107,7 @@ class ProfileController extends Controller
     *                          }
     *                           )
     *              ),
-    *   @OA\Response(response=401, description="Unauthorized"),
+    *   @OA\Response(response=401, description="Unauthenticated"),
     *   @OA\Response(response=422, description="Unprocessable Content")
     *      )
     */
