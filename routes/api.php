@@ -8,7 +8,7 @@ use App\Http\Middleware\Auhtorization;
 
 Route::prefix("api")->group(function(){
     
-Route::prefix("user")->middleware('auth:sanctum')->group( function(){
+Route::prefix("user")->middleware('auth:api')->group( function(){
 
 Route::get('/index', [UserController::class, 'index']);
 Route::post('/store', [UserController::class, 'store']);
@@ -20,7 +20,7 @@ Route::delete('/{id}/destroy', [UserController::class, 'destroy']);
 );
 
 
-Route::prefix("profile")->middleware('auth:sanctum')->group( function(){
+Route::prefix("profile")->middleware('auth:api')->group( function(){
 
     Route::get('/index', [ProfileController::class, 'index']);
     Route::post('/store', [ProfileController::class, 'store']);
