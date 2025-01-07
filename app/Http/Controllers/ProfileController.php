@@ -177,6 +177,7 @@ class ProfileController extends Controller
  *   tags={"Profile"},
  *   path="/profile/{id}/update",
  *   summary="Update an existing profile",
+ *   security= {{"bearerAuth:{}"}},
  *    @OA\Parameter(
  *     name= "id",
  *     in="path",

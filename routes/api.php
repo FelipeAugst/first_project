@@ -33,7 +33,7 @@ Route::prefix("profile")->middleware('auth:sanctum')->group( function(){
 
 
 
-    Route::get("/login",[AuthController::class,"login"]);
-    Route::get("/logout",[AuthController::class,"logout"]);
+    Route::post("/login",[AuthController::class,"login"]);
+    Route::post("/logout",[AuthController::class,"logout"]);
 
 });

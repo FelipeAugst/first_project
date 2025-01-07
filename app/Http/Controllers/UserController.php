@@ -139,6 +139,7 @@ class  UserController extends Controller
  * @OA\Put(
  *   tags={"User"},
  *   path="/user/update",
+ *   security= {{"bearerAuth:{}"}},
  *   summary="Update an existing user",
  *    @OA\Parameter(
  *         name= "id",
