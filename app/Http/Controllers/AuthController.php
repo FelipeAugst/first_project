@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use App\Models\User;
+
+use function Laravel\Prompts\password;
 
 class AuthController extends Controller
 {   /**
@@ -53,17 +56,66 @@ class AuthController extends Controller
 */
 
 
-    public static function login(Request $request)
+    public static function loginSanctum(Request $request)
     {   
+        //Validar campos de entrada email e senha
+        // Validar se o usuário existe
+
          if (!Auth::attempt(['email'=>$request->input('email'),'password'=>$request->input('password')])){
 
-        return response()->json("Invalid user",400);
+        return response()->json("Usuario invalido",400);
 
     }
         $user = Auth::user();
         $token = $user->createToken("auth");
        
         return response()->json(["token"=>$token],200);
+
+    }
+
+    public static function login(Request $request)
+    {
+         $request->validate([
+            'email' => 'string|max:255|email',
+            'password' => 'string|max:255'
+
+         ]);
+        $app_url= env('APP_URL');
+	    $email= $request->input('email');
+        $password= $request->input('password');
+
+        $user= User::where('email',$email)->first();
+        if($user == null){
+            return response()->json(['erro'=> 'usuario nao encontrado'],400);
+        }
+
+        else if (!Auth::attempt([
+                        'email'=>$email,
+                        'password'=>$password,
+                                ])){
+
+            return response()->json("senha incorreta",400);
+    
+        }
+        
+		
+        $response  = Http::asForm()->post($app_url . '/oauth/token',[
+											           'grant_type' => 'password',
+														'client_id' => env('PASSPORT_CLIENT_ID'),
+														'client_secret' => env('PASSPORT_CLIENT_SECRET'),
+														'username' => $email,
+														'password' => $password,
+														'scopes'   =>       [ 
+                                                                               '*' 
+                                                                              
+                                                                            ],
+												 ]);
+            
+         $token= $response->json();
+
+		
+
+         return $token;
 
     }
 

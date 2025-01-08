@@ -12,7 +12,7 @@
                     "Auth"
                 ],
                 "summary": "Authenticate user and generate a token",
-                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
+                "operationId": "474ec697a2dad1fd3ea822515e9002d0",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -190,6 +190,9 @@
                     },
                     "422": {
                         "description": "Unprocessable Content"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
                     }
                 },
                 "security": [
@@ -230,6 +233,9 @@
                     },
                     "401": {
                         "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
                     }
                 },
                 "security": [
@@ -273,6 +279,9 @@
                     },
                     "401": {
                         "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
                     }
                 },
                 "security": [
@@ -302,6 +311,9 @@
                     },
                     "401": {
                         "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
                     }
                 },
                 "security": [
@@ -614,6 +626,9 @@
             },
             "422": {
                 "description": "unprocessable content"
+            },
+            "403": {
+                "description": "UUnauthorizedauthorized"
             }
         },
         "securitySchemes": {

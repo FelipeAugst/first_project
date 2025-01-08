@@ -59,6 +59,10 @@ class  UserController extends Controller
 
     public static function index(Request $request)
     { 
+      if (!$request->user()->tokenCan('users.index')) 
+		{
+            return response()->json(['mensagem' => 'Não autorizado para visualizar usuarios.'], 403);
+        }
         $validator = Validator::make($request->all(), [
 			'limit' => 'required|int', 
              'orderby'=>'required|string',
@@ -112,7 +116,13 @@ class  UserController extends Controller
 
 
 
-   public static function store(Request $request){
+   public static function store(Request $request)
+   {
+
+    if (!$request->user()->tokenCan('users.store')) 
+		{
+            return response()->json(['mensagem' => 'Não autorizado para criar usuarios.'], 403);
+        }
     $validator = Validator::make($request->all(),[
                'name' => 'required|unique:users,name|max:255|string',
                'email' => 'required|unique:users,email|max:255|string|email',
@@ -122,6 +132,7 @@ class  UserController extends Controller
     if($validator->fails()){
 
         return response()->json(['error' => $validator->errors()], 422);
+
     }
 
 
@@ -168,8 +179,12 @@ class  UserController extends Controller
 
 
 
-   public static function update(Request $request,$id){
-
+   public static function update(Request $request,$id)
+   {
+    if (!$request->user()->tokenCan('users.update')) 
+		{
+            return response()->json(['mensagem' => 'Não autorizado para editar usuarios.'], 403);
+        }
     $validator = Validator::make($request->all(),[
         'name' => 'required|max:255|string',
         'email' => 'required|max:255|string|email',
@@ -223,6 +238,11 @@ return response()->json(['updated'=>$request->all()],200);
 
    public static function show(Request $request,$id){
 
+    if (!$request->user()->tokenCan('users.show')) 
+		{
+            return response()->json(['mensagem' => 'Não autorizado para listar usuarios.'], 403);
+        }
+
     $user = User::find($id);
     echo $user;
 
@@ -254,8 +274,12 @@ return response()->json(['updated'=>$request->all()],200);
      * )
      */
 
-   public static function destroy(Request $request, $id){
-
+   public static function destroy(Request $request, $id)
+   {
+    if (!$request->user()->tokenCan('users.delete')) 
+		{
+            return response()->json(['mensagem' => 'Não autorizado para delete usuarios.'], 403);
+        }
     
      $profiles = User::find($id)->profiles;
      if($profiles->isNotEmpty()){

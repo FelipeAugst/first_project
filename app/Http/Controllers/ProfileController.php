@@ -52,13 +52,20 @@ class ProfileController extends Controller
      *                     )
      *                   )
      * ),
-    *   @OA\Response(response=401, description="Unauthenticated"),
-    *   @OA\Response(response=422, description="unprocessable content"),
+     *   @OA\Response(response=401, description="Unauthenticated"),
+     *   @OA\Response(response=422, description="unprocessable content"),
+     *   @OA\Response(response=403,description="UUnauthorizedauthorized")
 
-    * )
-    */
+     * )
+     */
     public function index(Request $request)
     {
+
+        if (!$request->user()->tokenCan('index profiles')) 
+		{
+            return response()->json(['mensagem' => 'Não autorizado para visualizar perfis.','user'=>$request->user()], 403);
+        }
+
         $validator = Validator::make($request->all(),[
             'limit'=> 'required|int',
             'orderby'=> 'required|string',
@@ -108,12 +115,20 @@ class ProfileController extends Controller
     *                           )
     *              ),
     *   @OA\Response(response=401, description="Unauthenticated"),
-    *   @OA\Response(response=422, description="Unprocessable Content")
+    *   @OA\Response(response=422, description="Unprocessable Content"),
+    *   @OA\Response(response=403,description="Unauthorized")
     *      )
     */
 
     public function store(Request $request)
     {
+
+        if (!$request->user()->tokenCan('profiles.store')) 
+		{
+            return response()->json(['mensagem' => 'Não autorizado para criar perfis.'], 403);
+        }
+
+
         $validator = Validator::make($request->all(),[
             'user_id'=> 'int|required|exists:users,id',
             'profile' =>  ['string','required','max:255', Rule::in(['admin','user','ADMIN','USER']) ]
@@ -157,6 +172,7 @@ class ProfileController extends Controller
      * 
      * ),
      *   @OA\Response(response=401, description="Unauthenticated"),
+     *   @OA\Response(response=403,description="Unauthorized")
      *   
      * )
      */
@@ -164,6 +180,11 @@ class ProfileController extends Controller
     
     public function show(Request $request, $id)
     {
+        if (!$request->user()->tokenCan('profiles.show')) 
+		{
+            return response()->json(['mensagem' => 'Não autorizado para listar perfis.'], 403);
+        }
+
         $profiles = Profile::find($id);
 
         return response()->json($profiles,200);
@@ -197,11 +218,17 @@ class ProfileController extends Controller
  *        ),
  *   @OA\Response(response=200, description="Ok"),
  *   @OA\Response(response=401, description="Unauthenticated"),
+ *   @OA\Response(response=403,description="Unauthorized")
  *   )
  */
     
     public function update(Request $request, $id)
     {
+        if (!$request->user()->tokenCan('profiles.update')) 
+		{
+            return response()->json(['mensagem' => 'Não autorizado para editar perfis.'], 403);
+        }
+
 
         $validator = Validator::make($request->all(),[
             'user_id'=> 'int|required|exists:users,id',
@@ -239,6 +266,7 @@ class ProfileController extends Controller
      *     description="OK"
      *              ),
      *   @OA\Response(response=401, description="Unauthenticated"),
+     *   @OA\Response(response=403,description="Unauthorized")
      *   
      * )
      */
@@ -246,7 +274,12 @@ class ProfileController extends Controller
     
     public function destroy(Request $request, $id)
     {
-       ;
+        if (!$request->user()->tokenCan('profiles.delete')) 
+		{
+            return response()->json(['mensagem' => 'Não autorizado para deletar perfis.'], 403);
+        }
+
+       
         $profile = Profile::find($id);
       $profile->delete();
 
