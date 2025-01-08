@@ -105,8 +105,12 @@ class AuthController extends Controller
 														'client_secret' => env('PASSPORT_CLIENT_SECRET'),
 														'username' => $email,
 														'password' => $password,
-														'scopes'   =>       [ 
-                                                                               '*' 
+														'scopes'   =>       [  'users.index',
+                                                                                'users.show',
+                                                                                'users.update',
+                                                                                'users.store',
+                                                                                'users.delete',
+                                                                                
                                                                               
                                                                             ],
 												 ]);

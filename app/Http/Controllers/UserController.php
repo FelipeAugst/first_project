@@ -50,8 +50,9 @@ class  UserController extends Controller
      *                     )
      *                   ),
      * 
-    *   @OA\Response(response=401, description="Unauthorized"),
+    *   @OA\Response(response=401, description="Unauthenticated"),
     *   @OA\Response(response=422, description="unprocessable content"),
+    *   @OA\Response(response=403,description="Unauthorized")
 
     * )
     */
@@ -110,7 +111,9 @@ class  UserController extends Controller
     *                           )
     *              ),
     *   @OA\Response(response=401, description="Unauthenticated"),
-    *   @OA\Response(response=422, description="Unprocessable Content")
+    *   @OA\Response(response=422, description="Unprocessable Content"),
+    *   @OA\Response(response=403,description="Unauthorized")
+    *   )
     *      )
     */
 
@@ -171,6 +174,7 @@ class  UserController extends Controller
  *        ),
  *   @OA\Response(response=200, description="Ok"),
  *   @OA\Response(response=401, description="Unauthenticated"),
+ *   @OA\Response(response=403,description="Unauthorized")
  *   )
  */
 
@@ -231,6 +235,7 @@ return response()->json(['updated'=>$request->all()],200);
      * 
      * ),
      *   @OA\Response(response=401, description="Unauthenticated"),
+     *   @OA\Response(response=403,description="Unauthorized")
      *   
      * )
      */
@@ -270,6 +275,7 @@ return response()->json(['updated'=>$request->all()],200);
      *     description="OK"
      *              ),
      *   @OA\Response(response=401, description="Unauthenticated"),
+     *   @OA\Response(response=403,description="Unauthorized")
      *   
      * )
      */
